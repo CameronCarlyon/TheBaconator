@@ -1,0 +1,16 @@
+{
+  "name": "baconator",
+  "version": "1.0.0",
+  "description": "Greetings, I am the Baconator! I am a work-in-progress Discord bot.",
+  "main": "baconator.js",
+  "scripts": {
+    "start": "node baconator.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1"
+  }
+}
