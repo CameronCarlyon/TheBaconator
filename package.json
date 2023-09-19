@@ -2,9 +2,9 @@
   "name": "baconator",
   "version": "1.0.0",
   "description": "Greetings, I am the Baconator! I am a work-in-progress Discord bot.",
-  "main": "baconator.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node baconator.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
