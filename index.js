@@ -21,6 +21,6 @@ client.once("ready", () => {
 
 client.on("messageCreate", (message) => {
   recievedMessage = message.content.toLowerCase();
-  command = commands.find(({ key }) => recievedMessage.includes(key))
-  command ? message.reply(command.value) : null
+  command = commands.find(({ command }) => recievedMessage.includes(command))
+  command ? message.reply(command.reply) : null
 });
