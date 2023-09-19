@@ -1,26 +1,26 @@
-console.log("initialising...");
 require("dotenv").config();
+const { Client, GatewayIntentBits } = require("discord.js");
+const commands = require('./commands')
 
-const { Client, Events, GatewayIntentBits } = require("discord.js");
+console.log("initializing...");
 
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent,
   ],
 });
 
-client.once(Events.ClientReady, (c) => {
-  console.log(`The ${c.user.tag} is ready to roll!`);
+client.login(process.env.DISCORD_TOKEN);
+
+client.once("ready", () => {
+  console.log(`The bot is ready to roll!`);
 });
 
 client.on("messageCreate", (message) => {
-  console.log(message);
-  if (message.content === "Hello there!") {
-    message.reply("General Kenobi!");
-  }
+  recievedMessage = message.content.toLowerCase();
+  command = commands.find(({ command }) => recievedMessage.includes(command))
+  command ? message.reply(command.reply) : null
 });
-
-client.login(process.env.DISCORD_TOKEN);
