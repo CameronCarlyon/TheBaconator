@@ -3,12 +3,20 @@ const { REST, Routes } = require("discord.js");
 
 const commands = [
   {
+    name: "commands",
+    description: "A full list of functionality.",
+  },
+  {
     name: "ping",
     description: "Pong!",
   },
   {
-    name: "test",
-    description: "This is a test command.",
+    name: "server",
+    description: "Displays server information.",
+  },
+  {
+    name: "user",
+    description: "Displays user information.",
   },
 ];
 
@@ -18,13 +26,9 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 (async () => {
   try {
     console.log("Registering commands...");
-    await rest.put(
-      Routes.applicationGuildCommands(
-        process.env.CLIENT_ID,
-        process.env.GUILD_ID
-      ),
-      { body: commands }
-    );
+    await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
+      body: commands,
+    });
     console.log("Commands were registered successfully.");
   } catch (error) {
     console.log(`An error occured: ${error}`);
