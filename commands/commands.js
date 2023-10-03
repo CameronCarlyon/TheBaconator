@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const ping = require("./ping");
 
 module.exports = {
   data: new SlashCommandBuilder()

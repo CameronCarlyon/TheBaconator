@@ -7,6 +7,11 @@ const commands = [
     description: "A full list of functionality.",
   },
   {
+    name: "help",
+    description:
+      "The help command is here to assist you in case you encounter any issues, bugs or malfunctions.",
+  },
+  {
     name: "ping",
     description: "Pong!",
   },
