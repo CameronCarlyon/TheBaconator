@@ -6,6 +6,8 @@ Currently Supported Commands:
 
 - commands
   Supplies the user with a full list of functionality.
+- help
+  The help command is here to assist you in case you encounter any issues, bugs or malfunctions.
 - ping
   Ping Pong
 - server
