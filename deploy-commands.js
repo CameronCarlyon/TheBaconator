@@ -23,6 +23,10 @@ const commands = [
     name: "user",
     description: "Displays user information.",
   },
+  {
+    name: "github",
+    description: "The GitHub repository for the Baconator.",
+  },
 ];
 
 // Construct and prepare an instance of the REST module
