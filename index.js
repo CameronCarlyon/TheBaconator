@@ -4,7 +4,13 @@ require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
 const keywords = require("./commands/keywords");
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
+const {
+  Client,
+  Collection,
+  Events,
+  GatewayIntentBits,
+  ActivityType,
+} = require("discord.js");
 
 // Permissions
 const client = new Client({
@@ -20,6 +26,17 @@ client.login(process.env.DISCORD_TOKEN);
 
 client.once(Events.ClientReady, (c) => {
   console.log(`The ${c.user.tag} is ready to roll!`);
+  // Set the client user's presence
+  client.user.setPresence({
+    status: "online",
+    activities: [
+      {
+        type: ActivityType.Custom,
+        name: "customstatus",
+        state: "Your Crispiest Companion!",
+      },
+    ],
+  });
 });
 
 client.commands = new Collection();
