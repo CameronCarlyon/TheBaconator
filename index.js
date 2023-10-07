@@ -10,6 +10,7 @@ const {
   Events,
   GatewayIntentBits,
   ActivityType,
+  EmbedBuilder,
 } = require("discord.js");
 
 // Permissions
