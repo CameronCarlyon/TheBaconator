@@ -62,26 +62,27 @@ for (const file of commandFiles) {
 
 // Slash commands
 client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
+  if (interaction.isChatInputCommand()) {
+    const command = client.commands.get(interaction.commandName);
 
-  const command = client.commands.get(interaction.commandName);
-
-  if (!command) return;
-  console.log(interaction); // Print user interactions
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
-      });
-    } else {
-      await interaction.reply({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
-      });
+    if (command) {
+      console.log(interaction); // Print user interactions
+      try {
+        await command.execute(interaction);
+      } catch (error) {
+        console.error(error);
+        if (interaction.replied || interaction.deferred) {
+          await interaction.followUp({
+            content: "There was an error while executing this command!",
+            ephemeral: true,
+          });
+        } else {
+          await interaction.reply({
+            content: "There was an error while executing this command!",
+            ephemeral: true,
+          });
+        }
+      }
     }
   }
 });
@@ -89,7 +90,13 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // Listens to GuildMessages, converts to lowercase and checks for matches within keywords.js
 
 client.on("messageCreate", (message) => {
-  recievedMessage = message.content.toLowerCase();
-  keyword = keywords.find(({ keyword }) => recievedMessage.includes(keyword));
-  keyword ? message.reply(keyword.reply) : null;
+  if (! message.author.bot) {
+    recievedMessage = message.content.toLowerCase();
+    keyword = keywords.find(({ keyword }) => recievedMessage.includes(keyword));
+    keyword ? message.reply(keyword.reply) : null;  
+  }
 });
+
+// if a particular member is playing X game, print in a specific channel X message.
+// if you want multiple games. Make an array of games you want the bot to trigger on, 
+// then use array.prototype.includes to find out if it exists.
