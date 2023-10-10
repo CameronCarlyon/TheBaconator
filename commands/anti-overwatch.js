@@ -1,4 +1,4 @@
-const overwatchLaunch1 = [
+const overwatchOnLaunch1 = [
   "I couldn't help but notice that you launched Overwatch.",
   "Oh come on now!",
   "Though you wish to play Overwatch, I must heed you this warning:",
@@ -23,7 +23,7 @@ const overwatchLaunch1 = [
   "You and Overwatch, a match made in virtual heaven.",
 ];
 
-const overwatchLaunch2 = [
+const overwatchOnLaunch2 = [
   "Your social life may disappear faster than a Tracer blink, leaving you in a lonely solo queue abyss.",
   "Playing Overwatch may inspire irrational anger towards inanimate objects, such as your desk or your cereal bowl.",
   "Your diet will consist primarily of energy drinks and microwaveable snacks, leading to questionable nutritional choices.",
@@ -46,7 +46,7 @@ const overwatchLaunch2 = [
   "Genji may possess the ability to deflect away bullets, however he cannot deflect away your responsibilities.",
 ];
 
-const overwatchLaunch3 = [
+const overwatchOnLaunch3 = [
   "Think before you play.",
   "Please reconsider.",
   "Why not try a different game?",
@@ -96,3 +96,11 @@ const overwatchOnClosure2 = [
   "A small victory against your crippling addiction.",
   "You have taken the first step towards recovering wasted time.",
 ];
+
+module.exports = {
+  overwatchOnLaunch1,
+  overwatchOnLaunch2,
+  overwatchOnLaunch3,
+  overwatchOnClosure1,
+  overwatchOnClosure2,
+};

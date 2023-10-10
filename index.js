@@ -4,6 +4,7 @@ require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
 const keywords = require("./commands/keywords");
+const overwatch = require("./commands/anti-overwatch");
 const {
   Client,
   Collection,
@@ -11,6 +12,8 @@ const {
   GatewayIntentBits,
   ActivityType,
   EmbedBuilder,
+  GuildMember,
+  Activity,
 } = require("discord.js");
 
 // Permissions
@@ -20,13 +23,14 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildPresences,
   ],
 });
 
 client.login(process.env.DISCORD_TOKEN);
 
 client.once(Events.ClientReady, (c) => {
-  console.log(`The ${c.user.tag} is ready to roll!`);
+  console.log(`${c.user.tag} is ready to roll!`);
   // Set the client user's presence
   client.user.setPresence({
     status: "online",
@@ -90,13 +94,28 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // Listens to GuildMessages, converts to lowercase and checks for matches within keywords.js
 
 client.on("messageCreate", (message) => {
-  if (! message.author.bot) {
+  if (!message.author.bot) {
     recievedMessage = message.content.toLowerCase();
     keyword = keywords.find(({ keyword }) => recievedMessage.includes(keyword));
-    keyword ? message.reply(keyword.reply) : null;  
+    keyword ? message.reply(keyword.reply) : null;
   }
 });
 
 // if a particular member is playing X game, print in a specific channel X message.
-// if you want multiple games. Make an array of games you want the bot to trigger on, 
+// if you want multiple games. Make an array of games you want the bot to trigger on,
 // then use array.prototype.includes to find out if it exists.
+
+client.on("presenceUpdate", (oldPresence, newPresence) => {
+  // Check if the user has launched Overwatch.
+  const isPlayingOverwatch = newPresence.activities.some(
+    (activity) => activity.name === "Overwatch 2"
+  );
+  if (isPlayingOverwatch) {
+    const userMention = newPresence.user.toString();
+    console.log(`${userMention} has started playing Overwatch.`);
+    const channel = newPresence.member.guild.channels.cache.find(
+      (channel) => channel.name === "general"
+    );
+    channel.send(userMention);
+  }
+});
