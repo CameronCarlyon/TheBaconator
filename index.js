@@ -123,17 +123,18 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
     (activity) => activity.name === "Overwatch 2"
   );
 
-  // const wasPlayingOverwatch = oldPresence.activities.some(
-  //   (activity) => activity.name === "Overwatch 2"
-  // );
+  const wasPlayingOverwatch = oldPresence.activities.some(
+    (activity) => activity.name === "Overwatch 2"
+  );
+  const currentTime = Date.now();
+  const lastMessageTime = timeOfLastMessage[newPresence.user.id];
+  const userMention = newPresence.user.toString();
+  const channelGeneral = newPresence.member.guild.channels.cache.find(
+    (channel) => channel.name === "general"
+  );
 
   if (isPlayingOverwatch) {
-    const userMention = newPresence.user.toString();
-    const channelGeneral = newPresence.member.guild.channels.cache.find(
-      (channel) => channel.name === "general"
-    );
-    const currentTime = Date.now(); // move cooldown functionality to count from onClosure event instead of onLaunch
-    const lastMessageTime = timeOfLastMessage[newPresence.user.id];
+    // Checks the amount of time passed since last onClosure
     if (!lastMessageTime || currentTime - lastMessageTime >= cooldownDuration) {
       const overwatchLaunchMessage = `${userMention} ${
         overwatchOnLaunch1[
@@ -149,20 +150,31 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
         ]
       }`;
       console.log(overwatchLaunchMessage);
-      // channelGeneral.send(overwatchLaunchMessage);
-      timeOfLastMessage[newPresence.user.id] = currentTime;
+      // Sends the generated launch message.
+      channelGeneral.send(overwatchLaunchMessage);
+    }
+  } else if (wasPlayingOverwatch && !isPlayingOverwatch) {
+    const userMention = newPresence.user.toString();
+    // Checks the amount of time passed since last onClosure
+    if (!lastMessageTime || currentTime - lastMessageTime >= cooldownDuration) {
+      const overwatchClosureMessage = `${userMention} ${
+        overwatchOnClosure1[
+          Math.floor(Math.random() * overwatchOnClosure1.length)
+        ]
+      } ${
+        overwatchOnClosure2[
+          Math.floor(Math.random() * overwatchOnClosure2.length)
+        ]
+      }`;
+      console.log(overwatchClosureMessage);
+      // Sends the generated closure message.
+      channelGeneral.send(overwatchClosureMessage);
     } else console.log("Anti-Overwatch warning blocked by cooldown.");
+    // Records the time of the last onClosure message to currentTime.
+    timeOfLastMessage[newPresence.user.id] = currentTime;
   }
-  // if (wasPlayingOverwatch && !isPlayingOverwatch) {
-  //   const overwatchClosureMessage = `${userMention} ${
-  //     overwatchOnClosure1[
-  //       Math.floor(Math.random() * overwatchOnClosure1.length)
-  //     ]
-  //   } ${
-  //     overwatchOnClosure2[
-  //       Math.floor(Math.random() * overwatchOnClosure2.length)
-  //     ]
-  //   }`;
-  //   console.log(overwatchClosureMessage);
-  // }
 });
+
+// TO-DO:
+// - Impliment console.log method outputting "*user* started *playing/streaming* *activity* at *time*"
+// - Push notification declaring when a user starts streaming.

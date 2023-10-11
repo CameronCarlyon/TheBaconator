@@ -35,7 +35,7 @@ const overwatchOnLaunch2 = [
   "Life's payload may be heavy, but it's worth pushing for real-world victories.",
   "Do not allow a tank gap to overshadow the gap between your dreams and reality.",
   "Your life choices may become as questionable as picking Torbjörn on attack.",
-  "Continued exposure to Overwatch can leave your financial situation more unstable than Junkrat.",
+  "Continued exposure to Overwatch can leave your financial situation more unstable than Junkrat himself.",
   "Competitive mode may leave you feeling more lost and defeated than a lone Mercy trying to fend off the enemy team.",
   "Whilst you endlessly grind for in-game cosmetics, your real wardrobe screams for attention.",
   "Whilst Ana and Mercy might be lovely, real-life healers called doctors and therapists deserve your attention too.",
@@ -56,7 +56,7 @@ const overwatchOnLaunch3 = [
   "Try pushing your career forward instead of the payload.",
   "It's your funeral.",
   "Think again.",
-  "The ultimate defeat.",
+  "What about watching a film instead?",
 ];
 
 const overwatchOnClosure1 = [
@@ -70,6 +70,15 @@ const overwatchOnClosure1 = [
   "Good decision closing that game.",
   "Back from the virtual abyss, I see.",
   "I can see that you're done with Overwatch.",
+  "Finally, you saw the light.",
+  "Fantastic. Your priorities are in order.",
+  "Welcome back!",
+  "Bravo!",
+  "Welcome back to the tangible world.",
+  "Welcome back to reality.",
+  "Took you long enough to regain your senses.",
+  "Welcome back to the land of the living.",
+  "Finally, you've unplugged from the virtual treadmill that is Overwatch.",
 ];
 
 const overwatchOnClosure2 = [
@@ -95,6 +104,7 @@ const overwatchOnClosure2 = [
   "Maybe now you can reclaim some lost productivity?",
   "A small victory against your crippling addiction.",
   "You have taken the first step towards recovering wasted time.",
+  "Now please go do something a little bit more meaningful with your life.",
 ];
 
 module.exports = {
