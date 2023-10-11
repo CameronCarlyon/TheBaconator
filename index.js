@@ -4,7 +4,13 @@ require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
 const keywords = require("./commands/keywords");
-const overwatch = require("./commands/anti-overwatch");
+const {
+  overwatchOnLaunch1,
+  overwatchOnLaunch2,
+  overwatchOnLaunch3,
+  overwatchOnClosure1,
+  overwatchOnClosure2,
+} = require("./commands/anti-overwatch");
 const {
   Client,
   Collection,
@@ -14,7 +20,12 @@ const {
   EmbedBuilder,
   GuildMember,
   Activity,
+  userMention,
+  Presence,
 } = require("discord.js");
+
+// Troubleshooting
+// console.log("overwatchOnLaunch1:", overwatchOnLaunch1);
 
 // Permissions
 const client = new Client({
@@ -101,21 +112,57 @@ client.on("messageCreate", (message) => {
   }
 });
 
-// if a particular member is playing X game, print in a specific channel X message.
-// if you want multiple games. Make an array of games you want the bot to trigger on,
-// then use array.prototype.includes to find out if it exists.
+// Anti-Overwatch Message Generator
+
+const cooldownDuration = 60000; // x1000
+const timeOfLastMessage = {};
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
   // Check if the user has launched Overwatch.
   const isPlayingOverwatch = newPresence.activities.some(
     (activity) => activity.name === "Overwatch 2"
   );
+
+  // const wasPlayingOverwatch = oldPresence.activities.some(
+  //   (activity) => activity.name === "Overwatch 2"
+  // );
+
   if (isPlayingOverwatch) {
     const userMention = newPresence.user.toString();
-    console.log(`${userMention} has started playing Overwatch.`);
-    const channel = newPresence.member.guild.channels.cache.find(
+    const channelGeneral = newPresence.member.guild.channels.cache.find(
       (channel) => channel.name === "general"
     );
-    channel.send(userMention);
+    const currentTime = Date.now(); // move cooldown functionality to count from onClosure event instead of onLaunch
+    const lastMessageTime = timeOfLastMessage[newPresence.user.id];
+    if (!lastMessageTime || currentTime - lastMessageTime >= cooldownDuration) {
+      const overwatchLaunchMessage = `${userMention} ${
+        overwatchOnLaunch1[
+          Math.floor(Math.random() * overwatchOnLaunch1.length)
+        ]
+      } ${
+        overwatchOnLaunch2[
+          Math.floor(Math.random() * overwatchOnLaunch2.length)
+        ]
+      } ${
+        overwatchOnLaunch3[
+          Math.floor(Math.random() * overwatchOnLaunch3.length)
+        ]
+      }`;
+      console.log(overwatchLaunchMessage);
+      // channelGeneral.send(overwatchLaunchMessage);
+      timeOfLastMessage[newPresence.user.id] = currentTime;
+    } else console.log("Anti-Overwatch warning blocked by cooldown.");
   }
+  // if (wasPlayingOverwatch && !isPlayingOverwatch) {
+  //   const overwatchClosureMessage = `${userMention} ${
+  //     overwatchOnClosure1[
+  //       Math.floor(Math.random() * overwatchOnClosure1.length)
+  //     ]
+  //   } ${
+  //     overwatchOnClosure2[
+  //       Math.floor(Math.random() * overwatchOnClosure2.length)
+  //     ]
+  //   }`;
+  //   console.log(overwatchClosureMessage);
+  // }
 });
