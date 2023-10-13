@@ -27,7 +27,7 @@ const {
 // Troubleshooting
 // console.log("overwatchOnLaunch1:", overwatchOnLaunch1);
 
-// Permissions
+// New Client with Permissions
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -101,6 +101,12 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
   }
 });
+
+// Logs user activities in the console.
+
+// client.on("presenceUpdate", (newPresence) => {
+//   console.log(newPresence.name);
+// });
 
 // Listens to GuildMessages, converts to lowercase and checks for matches within keywords.js
 
