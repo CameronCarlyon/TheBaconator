@@ -111,16 +111,16 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
   ) {
     const user = newPresence.user.tag;
     const gameName = newPresence.activities[0].name;
+    console.log(`${user} is now playing ${newPresence.name}`);
   }
-  console.log(`${user} is now playing ${newPresence.name}`);
   if (
     oldPresence.activities.length > 0 &&
     oldPresence.activities[0].type === "PLAYING"
   ) {
     const user = oldPresence.user.tag;
     const gameName = oldPresence.activities[0].name;
+    console.log(`${user} is no longer playing ${oldPresence.name}`);
   }
-  console.log(`${user} is no longer playing ${oldPresence.name}`);
 });
 
 // Listens to GuildMessages, converts to lowercase and checks for matches within keywords.js
@@ -198,4 +198,4 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
 
 // TO-DO:
 // - Impliment console.log method outputting "*user* started *playing/streaming* *activity* at *time*"
-// - Push notification declaring when a user starts streaming.
+// - Push notification declaring when a user starts streaming
