@@ -104,9 +104,24 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 // Logs user activities in the console.
 
-// client.on("presenceUpdate", (newPresence) => {
-//   console.log(newPresence.name);
-// });
+client.on("presenceUpdate", (oldPresence, newPresence) => {
+  if (
+    newPresence.activities.length > 0 &&
+    newPresence.activities[0].type === "PLAYING"
+  ) {
+    const user = newPresence.user.tag;
+    const gameName = newPresence.activities[0].name;
+  }
+  console.log(`${user} is now playing ${newPresence.name}`);
+  if (
+    oldPresence.activities.length > 0 &&
+    oldPresence.activities[0].type === "PLAYING"
+  ) {
+    const user = oldPresence.user.tag;
+    const gameName = oldPresence.activities[0].name;
+  }
+  console.log(`${user} is no longer playing ${oldPresence.name}`);
+});
 
 // Listens to GuildMessages, converts to lowercase and checks for matches within keywords.js
 
