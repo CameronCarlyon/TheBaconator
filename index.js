@@ -102,24 +102,19 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-// Logs user activities in the console.
+// Logs user activities in the console (add time at end of output)
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
-  if (
-    newPresence.activities.length > 0 &&
-    newPresence.activities[0].type === "PLAYING"
-  ) {
+  console.log("Presence update detected:");
+  if (newPresence.activities.length > 0) {
     const user = newPresence.user.tag;
     const gameName = newPresence.activities[0].name;
-    console.log(`${user} is now playing ${newPresence.name}`);
+    console.log(`${user} is now on ${gameName}`);
   }
-  if (
-    oldPresence.activities.length > 0 &&
-    oldPresence.activities[0].type === "PLAYING"
-  ) {
+  if (oldPresence.activities.length > 0) {
     const user = oldPresence.user.tag;
     const gameName = oldPresence.activities[0].name;
-    console.log(`${user} is no longer playing ${oldPresence.name}`);
+    console.log(`${user} is no longer on ${gameName}`);
   }
 });
 
