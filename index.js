@@ -102,19 +102,26 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-// Logs user activities in the console (add time at end of output)
+// Logs user activities to the console
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
   console.log("Presence update detected:");
-  if (newPresence.activities.length > 0) {
+
+  if (
+    newPresence &&
+    newPresence.activities &&
+    newPresence.activities.length > 0
+  ) {
+    const presenceTime = new Date();
     const user = newPresence.user.tag;
     const gameName = newPresence.activities[0].name;
-    console.log(`${user} is now on ${gameName}`);
+    console.log(`${user} is now on ${gameName} at ${presenceTime}.`);
   }
-  if (oldPresence.activities.length > 0) {
+  if (oldPresence && oldPresence.activities.length > 0) {
+    const presenceTime = new Date();
     const user = oldPresence.user.tag;
     const gameName = oldPresence.activities[0].name;
-    console.log(`${user} is no longer on ${gameName}`);
+    console.log(`${user} is no longer on ${gameName} at ${presenceTime}.`);
   }
 });
 
@@ -130,8 +137,8 @@ client.on("messageCreate", (message) => {
 
 // Anti-Overwatch Message Generator
 
-const cooldownDuration = 60000; // x1000
-const timeOfLastMessage = {};
+const overwatchCooldownDuration = 60000; // x1000
+const overwatchTimeOfLastMessage = {};
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
   // Check if the user has launched Overwatch.
@@ -139,11 +146,14 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
     (activity) => activity.name === "Overwatch 2"
   );
 
+  if (oldPresence.activities) {
+  }
+
   const wasPlayingOverwatch = oldPresence.activities.some(
     (activity) => activity.name === "Overwatch 2"
   );
   const currentTime = Date.now();
-  const lastMessageTime = timeOfLastMessage[newPresence.user.id];
+  const lastMessageTime = overwatchTimeOfLastMessage[newPresence.user.id];
   const userMention = newPresence.user.toString();
   const channelGeneral = newPresence.member.guild.channels.cache.find(
     (channel) => channel.name === "general"
@@ -151,7 +161,10 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
 
   if (isPlayingOverwatch) {
     // Checks the amount of time passed since last onClosure
-    if (!lastMessageTime || currentTime - lastMessageTime >= cooldownDuration) {
+    if (
+      !lastMessageTime ||
+      currentTime - lastMessageTime >= overwatchCooldownDuration
+    ) {
       const overwatchLaunchMessage = `${userMention} ${
         overwatchOnLaunch1[
           Math.floor(Math.random() * overwatchOnLaunch1.length)
@@ -169,10 +182,13 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
       // Sends the generated launch message.
       channelGeneral.send(overwatchLaunchMessage);
     }
-  } else if (wasPlayingOverwatch && !isPlayingOverwatch) {
+  } else if (oldPresence && wasPlayingOverwatch && !isPlayingOverwatch) {
     const userMention = newPresence.user.toString();
     // Checks the amount of time passed since last onClosure
-    if (!lastMessageTime || currentTime - lastMessageTime >= cooldownDuration) {
+    if (
+      !lastMessageTime ||
+      currentTime - lastMessageTime >= overwatchCooldownDuration
+    ) {
       const overwatchClosureMessage = `${userMention} ${
         overwatchOnClosure1[
           Math.floor(Math.random() * overwatchOnClosure1.length)
@@ -187,7 +203,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
       channelGeneral.send(overwatchClosureMessage);
     } else console.log("Anti-Overwatch warning blocked by cooldown.");
     // Records the time of the last onClosure message to currentTime.
-    timeOfLastMessage[newPresence.user.id] = currentTime;
+    overwatchTimeOfLastMessage[newPresence.user.id] = currentTime;
   }
 });
 
