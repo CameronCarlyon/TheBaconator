@@ -105,8 +105,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // Logs user activities to the console
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
-  console.log("Presence update detected:");
-
   if (
     newPresence &&
     newPresence.activities &&
