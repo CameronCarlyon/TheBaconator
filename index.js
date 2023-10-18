@@ -135,7 +135,7 @@ client.on("messageCreate", (message) => {
 
 // Anti-Overwatch Message Generator
 
-const overwatchCooldownDuration = 60000; // x1000
+const overwatchCooldownDuration = 300000; // x1000
 const overwatchTimeOfLastMessage = {};
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
