@@ -206,5 +206,4 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
 });
 
 // TO-DO:
-// - Impliment console.log method outputting "*user* started *playing/streaming* *activity* at *time*"
 // - Push notification declaring when a user starts streaming
