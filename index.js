@@ -207,3 +207,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
 
 // TO-DO:
 // - Push notification declaring when a user starts streaming
+
+// ERRORS
+// -if (oldPresence.activities) {
+// TypeError: Cannot read properties of null (reading 'activities')
