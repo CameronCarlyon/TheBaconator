@@ -79,6 +79,7 @@ const overwatchOnClosure1 = [
   "Took you long enough to regain your senses.",
   "Welcome back to the land of the living.",
   "Finally, you've unplugged from the virtual treadmill that is Overwatch.",
+  "Nice.",
 ];
 
 const overwatchOnClosure2 = [
