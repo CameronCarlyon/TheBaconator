@@ -44,6 +44,7 @@ const overwatchOnLaunch2 = [
   "You have become more invested in digital skins than in your own skin-care routine.",
   "Playing too much Overwatch can feel like a Sombra EMP that wipes out your real-world productivity and connectivity.",
   "Genji may possess the ability to deflect away bullets, however he cannot deflect away your responsibilities.",
+  "The competitive grind is no match for the hussle of real world goals.",
 ];
 
 const overwatchOnLaunch3 = [
