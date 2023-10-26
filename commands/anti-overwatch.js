@@ -108,6 +108,7 @@ const overwatchOnClosure2 = [
   "A small victory against your crippling addiction.",
   "You have taken the first step towards recovering wasted time.",
   "Now please go do something a little bit more meaningful with your life.",
+  "I'm proud of you.",
 ];
 
 module.exports = {
