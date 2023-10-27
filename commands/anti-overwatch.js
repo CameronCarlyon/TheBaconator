@@ -58,6 +58,7 @@ const overwatchOnLaunch3 = [
   "It's your funeral.",
   "Think again.",
   "What about watching a film instead?",
+  "I beg.",
 ];
 
 const overwatchOnClosure1 = [
