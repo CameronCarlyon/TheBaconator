@@ -83,6 +83,7 @@ const overwatchOnClosure1 = [
   "Finally, you've unplugged from the virtual treadmill that is Overwatch.",
   "Nice.",
   "Great.",
+  "We got there.",
 ];
 
 const overwatchOnClosure2 = [
