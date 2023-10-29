@@ -84,6 +84,7 @@ const overwatchOnClosure1 = [
   "Nice.",
   "Great.",
   "We got there.",
+  "Incredible...",
 ];
 
 const overwatchOnClosure2 = [
