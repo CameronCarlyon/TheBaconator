@@ -55,7 +55,6 @@ const overwatchOnLaunch3 = [
   "Why don't you go take a shower instead?",
   "How about touching some grass instead?",
   "Try pushing your career forward instead of the payload.",
-  "It's your funeral.",
   "Think again.",
   "What about watching a film instead?",
   "I beg.",
