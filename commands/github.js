@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
-const { EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 const githubEmbed = new EmbedBuilder()
   .setColor(0x0099ff)
@@ -40,3 +39,5 @@ module.exports = {
     await interaction.reply(githubEmbed);
   },
 };
+
+channel.send({ embeds: githubEmbed });
