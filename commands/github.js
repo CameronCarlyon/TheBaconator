@@ -26,4 +26,4 @@ module.exports = {
   },
 };
 
-channel.send({ embeds: githubEmbed });
+// channel.send({ embeds: githubEmbed });
