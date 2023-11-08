@@ -144,7 +144,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
     (activity) => activity.name === "Overwatch 2"
   );
 
-  if (oldPresence.activities) {
+  if (oldPresence && oldPresence.activities) {
   }
 
   const wasPlayingOverwatch = oldPresence.activities.some(
