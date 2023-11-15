@@ -3,34 +3,19 @@ const { EmbedBuilder } = require("discord.js");
 
 const githubEmbed = new EmbedBuilder()
   .setColor(0x0099ff)
-  .setTitle("The Baconator")
+  .setTitle("The Baconator Github Repo")
   .setURL("https://github.com/CameronCarlyon/Baconator")
   .setAuthor({
-    name: "Some name",
-    iconURL: "https://i.imgur.com/AfFp7pu.png",
-    url: "https://discord.js.org",
+    name: "Cameron Carlyon",
+    iconURL:
+      "https://avatars.githubusercontent.com/u/81519722?s=400&u=f2719b95754795449a33a132f382ec51f0a68768&v=4",
+    url: "https://github.com/CameronCarlyon",
   })
   .setDescription(
     "Greetings, I am the Baconator! I am a work-in-progress bot designed for Discord."
   )
   .setThumbnail("https://i.imgur.com/AfFp7pu.png")
-  .addFields(
-    { name: "Regular field title", value: "Some value here" },
-    { name: "\u200B", value: "\u200B" },
-    { name: "Inline field title", value: "Some value here", inline: true },
-    { name: "Inline field title", value: "Some value here", inline: true }
-  )
-  .addFields({
-    name: "Inline field title",
-    value: "Some value here",
-    inline: true,
-  })
-  .setImage("https://i.imgur.com/AfFp7pu.png")
-  .setTimestamp()
-  .setFooter({
-    text: "Some footer text here",
-    iconURL: "https://i.imgur.com/AfFp7pu.png",
-  });
+  .addFields({ name: "Regular field title", value: "Some value here" });
 
 module.exports = {
   data: new SlashCommandBuilder()
