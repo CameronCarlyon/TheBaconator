@@ -33,7 +33,10 @@ const keywords = [
     keyword: `<@1153100640671780907>`,
     reply: "Sup?",
   },
-  { keyword: "2042", reply: "2042 is the year that game comes out of alpha." },
+  {
+    keyword: "bf2042",
+    reply: "2042 is the year that game comes out of alpha.",
+  },
 ];
 
 module.exports = keywords;
