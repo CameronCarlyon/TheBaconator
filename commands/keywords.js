@@ -1,5 +1,6 @@
 const keywords = [
   { keyword: "baconator", reply: "You rang?" },
+  { keyword: "bad bot", reply: "🥺" },
   { keyword: "bacon", reply: "Praise the creator! 🥓" },
   { keyword: "hello there", reply: "General Kenobi!" },
   {
