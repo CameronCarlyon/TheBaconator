@@ -25,7 +25,7 @@ const overwatchOnLaunch1 = [
 
 const overwatchOnLaunch2 = [
   "Your social life may disappear faster than a Tracer blink, leaving you in a lonely solo queue abyss.",
-  "Playing Overwatch may inspire irrational anger towards inanimate objects, such as your desk or your cereal bowl.",
+  "Playing Overwatch may inspire irrational anger towards inanimate objects and family members alike, such as your desk or poor kitty.",
   "Your diet will consist primarily of energy drinks and microwaveable snacks, leading to questionable nutritional choices.",
   'The phrase "just one more game" will transform into an empty promise that keeps you up all night.',
   "Your ability to hang out with friends may become as rare as a Widowmaker headshot in the lower ranks.",
