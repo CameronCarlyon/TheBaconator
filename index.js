@@ -133,7 +133,19 @@ client.on("messageCreate", (message) => {
   }
 });
 
-// Twitch Alerts
+// Stream Alerts
+
+// client.on('presenceUpdate', (oldPresence, newPresence) => {
+//   const streamingBefore = oldPresence.activities.some(activity => activity.type === 'STREAMING');
+//   const streamingNow = newPresence.activities.some(activity => activity.type === 'STREAMING');
+
+//   if (!streamingBefore && streamingNow) {
+//       const channel = client.channels.cache.get('YOUR_CHANNEL_ID'); // Replace with your channel ID
+//       if (channel) {
+//           channel.send(`${newPresence.user.tag} is now streaming! Check it out: ${newPresence.activities.find(activity => activity.type === 'STREAMING').url}`);
+//       }
+//   }
+// });
 
 // Anti-Overwatch Message Generator
 
@@ -149,9 +161,9 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
   if (oldPresence && oldPresence.activities) {
   }
 
-  const wasPlayingOverwatch = oldPresence.activities.some(
-    (activity) => activity.name === "Overwatch 2"
-  );
+  const wasPlayingOverwatch = oldPresence
+    ? oldPresence.activities.some((activity) => activity.name === "Overwatch 2")
+    : false;
   const currentTime = Date.now();
   const lastMessageTime = overwatchTimeOfLastMessage[newPresence.user.id];
   const userMention = newPresence.user.toString();
