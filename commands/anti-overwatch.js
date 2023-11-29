@@ -28,7 +28,7 @@ const overwatchOnLaunch2 = [
   "Playing Overwatch may inspire irrational anger towards inanimate objects and family members alike, such as your desk or poor kitty.",
   "Your diet will consist primarily of energy drinks and microwaveable snacks, leading to questionable nutritional choices.",
   'The phrase "just one more game" will transform into an empty promise that keeps you up all night.',
-  "Your ability to hang out with friends may become as rare as a Widowmaker headshot in the lower ranks.",
+  "Your future opportunities to socialise with friends may soon become as rare as a Widowmaker headshot in the lower ranks.",
   "Overwatch can teach you creative new ways to express frustration, often involving a thesaurus of profanities.",
   "Overwatch could lead to impromptu arguments with your ISP.",
   "Overwatch may grant wins, but victory in battle doesn't pay the bills.",
