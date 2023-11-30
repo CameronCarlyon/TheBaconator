@@ -3,6 +3,7 @@ const keywords = [
   { keyword: "bad bot", reply: "🥺" },
   { keyword: "bacon", reply: "Praise the creator! 🥓" },
   { keyword: "hello there", reply: "General Kenobi!" },
+  { keyword: "stfu", reply: "🤓📣" },
   {
     keyword: "rik",
     reply:
