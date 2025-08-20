@@ -4,7 +4,10 @@
   "description": "Greetings, I am the Baconator! I am a work-in-progress Discord bot.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js",
+    "dev": "node index.js",
+    "deploy-and-start": "npm run deploy && npm start"
   },
   "keywords": [],
   "author": "",
