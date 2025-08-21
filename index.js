@@ -3,25 +3,20 @@ console.log("Initialising...");
 require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
-const keywords = require("./commands/keywords");
+const keywords = require("./utils/keywords");
 const {
   overwatchOnLaunch1,
   overwatchOnLaunch2,
   overwatchOnLaunch3,
   overwatchOnClosure1,
   overwatchOnClosure2,
-} = require("./commands/anti-overwatch");
+} = require("./utils/anti-overwatch");
 const {
   Client,
   Collection,
   Events,
   GatewayIntentBits,
   ActivityType,
-  EmbedBuilder,
-  GuildMember,
-  Activity,
-  userMention,
-  Presence,
 } = require("discord.js");
 
 // Troubleshooting
@@ -105,17 +100,15 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // Logs user activities to the console
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
-  if (
-    newPresence &&
-    newPresence.activities &&
-    newPresence.activities.length > 0
-  ) {
+  if (!newPresence?.activities) return;
+  
+  if (newPresence.activities.length > 0) {
     const presenceTime = new Date();
     const user = newPresence.user.tag;
     const gameName = newPresence.activities[0].name;
     console.log(`${user} is now on ${gameName} at ${presenceTime}.`);
   }
-  if (oldPresence && oldPresence.activities.length > 0) {
+  if (oldPresence?.activities?.length > 0) {
     const presenceTime = new Date();
     const user = oldPresence.user.tag;
     const gameName = oldPresence.activities[0].name;
@@ -127,25 +120,39 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
 
 client.on("messageCreate", (message) => {
   if (!message.author.bot) {
-    recievedMessage = message.content.toLowerCase();
-    keyword = keywords.find(({ keyword }) => recievedMessage.includes(keyword));
-    keyword ? message.reply(keyword.reply) : null;
+    const receivedMessage = message.content.toLowerCase();
+    const keyword = keywords.find(({ keyword }) => receivedMessage.includes(keyword));
+    if (keyword) {
+      message.reply(keyword.reply);
+    }
   }
 });
 
 // Stream Alerts
+const streamingCooldownDuration = 300000; // 5 minutes
+const streamingTimeOfLastMessage = {};
 
-// client.on('presenceUpdate', (oldPresence, newPresence) => {
-//   const streamingBefore = oldPresence.activities.some(activity => activity.type === 'STREAMING');
-//   const streamingNow = newPresence.activities.some(activity => activity.type === 'STREAMING');
+client.on('presenceUpdate', (oldPresence, newPresence) => {
+  if (!newPresence || !newPresence.member) return;
+  
+  const streamingBefore = oldPresence?.activities?.some(activity => activity.type === ActivityType.Streaming) || false;
+  const streamingNow = newPresence.activities.some(activity => activity.type === ActivityType.Streaming);
+  const currentTime = Date.now();
+  const lastStreamMessageTime = streamingTimeOfLastMessage[newPresence.user.id];
 
-//   if (!streamingBefore && streamingNow) {
-//       const channel = client.channels.cache.get('YOUR_CHANNEL_ID'); // Replace with your channel ID
-//       if (channel) {
-//           channel.send(`${newPresence.user.tag} is now streaming! Check it out: ${newPresence.activities.find(activity => activity.type === 'STREAMING').url}`);
-//       }
-//   }
-// });
+  if (!streamingBefore && streamingNow) {
+    // Check cooldown
+    if (!lastStreamMessageTime || currentTime - lastStreamMessageTime >= streamingCooldownDuration) {
+      const channel = newPresence.member.guild.channels.cache.find(ch => ch.name === 'general');
+      if (channel) {
+        const streamActivity = newPresence.activities.find(activity => activity.type === ActivityType.Streaming);
+        const streamUrl = streamActivity?.url || 'Stream URL not available';
+        channel.send(`🎥 ${newPresence.user.toString()} is now streaming! Check it out: ${streamUrl}`);
+        streamingTimeOfLastMessage[newPresence.user.id] = currentTime;
+      }
+    }
+  }
+});
 
 // Anti-Overwatch Message Generator
 
@@ -153,13 +160,12 @@ const overwatchCooldownDuration = 300000; // x1000
 const overwatchTimeOfLastMessage = {};
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
+  if (!newPresence?.member?.guild) return;
+  
   // Check if the user has launched Overwatch.
   const isPlayingOverwatch = newPresence.activities.some(
     (activity) => activity.name === "Overwatch 2"
   );
-
-  if (oldPresence && oldPresence.activities) {
-  }
 
   const wasPlayingOverwatch = oldPresence
     ? oldPresence.activities.some((activity) => activity.name === "Overwatch 2")
@@ -171,8 +177,8 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
     (channel) => channel.name === "general"
   );
 
-  if (isPlayingOverwatch) {
-    // Checks the amount of time passed since last onClosure
+  if (isPlayingOverwatch && !wasPlayingOverwatch) {
+    // Checks the amount of time passed since last message
     if (
       !lastMessageTime ||
       currentTime - lastMessageTime >= overwatchCooldownDuration
@@ -192,11 +198,17 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
       }`;
       console.log(overwatchLaunchMessage);
       // Sends the generated launch message.
-      channelGeneral.send(overwatchLaunchMessage);
+      if (channelGeneral) {
+        channelGeneral.send(overwatchLaunchMessage);
+        // Update the cooldown timer for launch messages too
+        overwatchTimeOfLastMessage[newPresence.user.id] = currentTime;
+      }
+    } else {
+      console.log("Anti-Overwatch launch warning blocked by cooldown.");
     }
   } else if (oldPresence && wasPlayingOverwatch && !isPlayingOverwatch) {
     const userMention = newPresence.user.toString();
-    // Checks the amount of time passed since last onClosure
+    // Checks the amount of time passed since last message
     if (
       !lastMessageTime ||
       currentTime - lastMessageTime >= overwatchCooldownDuration
@@ -212,13 +224,20 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
       }`;
       console.log(overwatchClosureMessage);
       // Sends the generated closure message.
-      channelGeneral.send(overwatchClosureMessage);
-    } else console.log("Anti-Overwatch warning blocked by cooldown.");
-    // Records the time of the last onClosure message to currentTime.
-    overwatchTimeOfLastMessage[newPresence.user.id] = currentTime;
+      if (channelGeneral) {
+        channelGeneral.send(overwatchClosureMessage);
+      }
+      // Records the time of the last message to currentTime.
+      overwatchTimeOfLastMessage[newPresence.user.id] = currentTime;
+    } else {
+      console.log("Anti-Overwatch closure warning blocked by cooldown.");
+    }
   }
 });
 
 // TO-DO:
-// - Push notification declaring when a user starts streaming
-// - Per user anti-overwatch cooldown
+// - Add more customizable streaming notification settings
+// - Add command to toggle anti-overwatch messages per user
+// - Add more interactive commands (polls, random generators, etc.)
+// - Add admin commands for server management
+// - Add database support for persistent user preferences
