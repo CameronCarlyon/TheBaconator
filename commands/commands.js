@@ -15,7 +15,16 @@ module.exports = {
             *Provides information for the current server in use.*
             * **user**
                  
-            *Provides information about the user.*`
+            *Provides information about the user.*
+            * **github**
+                
+            *Shows the GitHub repository for the Baconator.*
+            * **help**
+                
+            *Provides help and troubleshooting information.*
+            * **decide**
+                
+            *Generates a yes or no response to help with decisions.*`
     );
   },
 };

@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 const githubEmbed = new EmbedBuilder()
   .setColor(0x0099ff)
@@ -15,15 +14,17 @@ const githubEmbed = new EmbedBuilder()
     "Greetings, I am the Baconator! I am a work-in-progress bot designed for Discord."
   )
   .setThumbnail("https://i.imgur.com/AfFp7pu.png")
-  .addFields({ name: "Regular field title", value: "Some value here" });
+  .addFields(
+    { name: "Repository", value: "Check out the source code!" },
+    { name: "Issues", value: "Report bugs or suggest features on GitHub" },
+    { name: "Version", value: "0.1.0" }
+  );
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("help")
+    .setName("github")
     .setDescription("The GitHub repository for the Baconator."),
   async execute(interaction) {
-    await interaction.reply(githubEmbed);
+    await interaction.reply({ embeds: [githubEmbed] });
   },
 };
-
-// channel.send({ embeds: githubEmbed });
