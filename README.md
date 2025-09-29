@@ -1,6 +1,6 @@
-# Baconator
+# The Baconator
 
-Greetings, I am the Baconator! I am a work-in-progress bot designed for Discord.
+A cross-platform chat bot developed for both Discord and Twitch, built with Node.js using discord.js and tmi.js. Designed with modular commands and event-driven architecture, it demonstrates skills in API integration, real-time communication, OAuth authentication, and 24/7 deployment on external hosting.
 
 ## Features
 
