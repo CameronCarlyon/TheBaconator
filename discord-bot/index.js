@@ -1,6 +1,6 @@
 console.log("Initialising...");
 
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 const fs = require("node:fs");
 const path = require("node:path");
 const keywords = require("./utils/keywords");
